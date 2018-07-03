@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="col-lg-12">
+
+        <div class="panel-heading">
+            <table class="table table-hover">
+			    <thead>
+			      <tr>
+			        <th>Data</th>
+			        <th>Hora Início</th>
+			        <th>Hora Fim</th>
+			        <th>Paciente</th>
+			        <th>Procedimento</th>
+			        <th></th>
+			        <th></th>
+			      </tr>
+			    </thead>
+			    <tbody id="tabela-pacientes">
+			    	<input type="hidden" id="token" value="{{ csrf_token }}">
+			    	{% for item in agendamentos %}
+			        <tr class="paciente">
+			     	    <td id="data">{{ item.agd_date }}</td>
+				        <td id="hora_inicio">{{ item.agd_hora_inicio }}</td>
+				        <td id="hora_fim">{{ item.agd_hora_fim }}</td>
+				        <td id="paciente">{{ item.agd_paciente }}</td>
+				        <td id="procedimento">{{ item.agd_procedimento }}</td>
+				        <td>
+				        	<i class="fa fa-trash" id="{{item.id}}"></i>
+				        </td>
+				        <td>
+				        	<i class="far fa-edit" id="{{item.id}}"></i>
+				        </td>
+				     </tr>
+			        {% endfor %}
+			    </tbody>
+			</table>
+        </div>
+    </div>
+</div>
+
+{% block modal_edit %}
+   {% include "modal/modal_edit.html" %}
+{% endblock %}  
+
+{% block modal_cad %}
+   {% include "modal/modal_cad.html" %}
+{% endblock %} 
+
+{% load staticfiles %}
+<script src="{% static 'js/lista_pacientes/pacientes.js' %}"></script>
+
+
+<script>
+/*
+	#############################################
+	AJAX para capturar o click no icone de editar
+	#############################################
+*/
+/*var pacientes = document.querySelectorAll(".paciente");
+var tabela = document.querySelector("#tabela-pacientes");
+
+tabela.addEventListener("click", function(event) {
+
+	tr = ((event.target.parentNode).parentNode)
+	td = event.target.parentNode.className
+
+	if(td == 'edit_icon'){
+
+		data_agenda= 			tr.querySelector("#data").textContent,
+	    hora_inicio_agenda= 	tr.querySelector("#hora_inicio").textContent,
+	    hora_fim_agenda= 		tr.querySelector("#hora_fim").textContent,
+	    paciente_agenda= 		tr.querySelector("#paciente").textContent,
+	    procedimento_agenda= 	tr.querySelector("#procedimento").textContent
+
+		$.ajax({
+	    	method: "POST",
+	    	url: "editAgenda/",
+	    	data: {
+	    		csrfmiddlewaretoken: 	"{{ csrf_token }}",
+	    		id_agenda: 				event.target.parentNode.id,
+	    		data_agenda: 			data_agenda,
+	    		hora_inicio_agenda: 	hora_inicio_agenda,
+	    		hora_fim_agenda: 		hora_fim_agenda,
+	    		paciente_agenda: 		paciente_agenda,
+	    		procedimento_agenda: 	procedimento_agenda
+	    	}
+	    });
+	}
+}); */
+</script>
+
+{% endblock %}
